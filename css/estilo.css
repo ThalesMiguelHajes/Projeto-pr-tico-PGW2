@@ -1,56 +1,84 @@
-/* ===== Cores e base ===== */
+/* =====================================================================
+   Cores
+   ===================================================================== */
 :root {
   --azul: #1351b4;
   --azul-escuro: #0c326f;
   --amarelo: #ffcd07;
-  --fundo: #f4f6fb;
+  --amarelo-claro: #fff3b0;
+  --fundo: #eef2f9;
   --texto: #1b1b1b;
   --branco: #ffffff;
   --verde: #168821;
   --vermelho: #c5221f;
+  --cinza: #5c6370;
 }
 
 * { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--texto);
   background: var(--fundo);
 }
 
-/* ===== FOCO VISÍVEL: a parte mais importante da navegação por teclado ===== */
+/* =====================================================================
+   FOCO VISÍVEL – a regra mais importante da navegação por teclado
+   ===================================================================== */
 :focus-visible {
   outline: 4px solid var(--amarelo);
   outline-offset: 3px;
   box-shadow: 0 0 0 7px var(--texto);
 }
 
-/* Elementos que só recebem foco via JavaScript (tabindex="-1") não precisam da borda */
-[tabindex="-1"]:focus { outline: none; box-shadow: none; }
-
-/* Destaque do item que está sendo traduzido pelo VLibras (foco ou mouse) */
-.traduzindo {
-  background-color: #fff6c7 !important;
-  transition: background-color .2s;
+/* Regiões que recebem foco só pelo JavaScript (tabindex="-1") não precisam da borda */
+main:focus, nav:focus, footer:focus, .slide:focus, #missoes:focus, #tutorial-titulo:focus {
+  outline: none;
+  box-shadow: none;
 }
+
+/* Item que está sendo traduzido (recebeu foco pelo Tab ou o mouse está em cima):
+   fundo amarelo-claro e TEXTO PRETO, para ficar fácil de ler */
+.traduzindo,
+.traduzindo * {
+  color: var(--texto) !important;
+}
+.traduzindo {
+  background-color: var(--amarelo-claro) !important;
+  transition: background-color .15s;
+}
+.traduzindo kbd,
+.traduzindo code { background: var(--branco) !important; }
+
+/* Demonstração "desligar foco visível" (slide Foco visível) */
+.sem-foco :focus-visible { outline: none !important; box-shadow: none !important; }
+.sem-foco .traduzindo { background-color: inherit !important; }
 
 kbd {
   display: inline-block;
-  padding: 1px 7px;
+  padding: 0 7px;
   border: 1px solid #888;
   border-bottom-width: 3px;
   border-radius: 5px;
   background: var(--branco);
+  color: var(--texto);
   font-family: monospace;
   font-size: .9em;
+  line-height: 1.6;
 }
 
-code { background: #e6e9f2; padding: 1px 5px; border-radius: 4px; }
+code { background: #e3e8f2; padding: 1px 5px; border-radius: 4px; font-size: .92em; }
 
-/* ===== SKIP LINK: escondido até receber foco ===== */
+a { color: var(--azul); }
+
+/* =====================================================================
+   SKIP LINK – fora da tela até receber foco
+   ===================================================================== */
 .pular-link {
   position: absolute;
   top: -100px;
@@ -66,7 +94,9 @@ code { background: #e6e9f2; padding: 1px 5px; border-radius: 4px; }
 }
 .pular-link:focus { top: 0; }
 
-/* ===== Barra de acessibilidade ===== */
+/* =====================================================================
+   Barra de acessibilidade (topo)
+   ===================================================================== */
 .barra-acessibilidade {
   display: flex;
   flex-wrap: wrap;
@@ -90,75 +120,158 @@ code { background: #e6e9f2; padding: 1px 5px; border-radius: 4px; }
 }
 .opcoes { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .opcoes label { cursor: pointer; }
-
-/* ===== Topo e menu ===== */
-.topo {
-  background: var(--azul);
-  color: var(--branco);
-  padding: 24px 16px 0;
-  text-align: center;
+.botao-pequeno {
+  padding: 4px 10px;
+  background: var(--branco);
+  color: var(--azul-escuro);
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
 }
-.topo h1 { margin: 0; font-size: 2rem; }
-.topo > p { margin: 4px 0 16px; }
-.topo nav ul {
+
+/* =====================================================================
+   Painel fixo (tecla, texto traduzido, progresso, missões)
+   ===================================================================== */
+.painel {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--texto);
+  color: var(--branco);
+  font-size: 15px;
+}
+.painel-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 8px 16px;
+}
+.painel-texto { flex: 1; min-width: 200px; }
+.painel .rotulo { opacity: .7; }
+#painel-tecla { color: var(--amarelo); }
+.link-missoes { color: var(--branco); text-decoration: none; }
+.progresso { height: 5px; background: #3a3a3a; }
+#progresso-barra { height: 100%; width: 0; background: var(--amarelo); transition: width .3s; }
+
+/* =====================================================================
+   Topo e sumário
+   ===================================================================== */
+.topo { background: var(--azul); color: var(--branco); padding: 12px 16px 0; text-align: center; }
+.topo-titulo { margin: 0 0 4px; font-weight: bold; }
+.topo nav ol {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 0;
   padding: 0;
   list-style: none;
+  counter-reset: item;
 }
+.topo nav li { counter-increment: item; }
 .topo nav a {
   display: block;
-  padding: 12px 16px;
+  padding: 8px 10px;
   color: var(--branco);
   text-decoration: none;
-  font-weight: bold;
-}
-.topo nav a:hover, .topo nav a:focus-visible { background: var(--azul-escuro); }
-
-/* ===== Painel (tecla + texto traduzido) ===== */
-.painel {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 24px;
-  padding: 8px 16px;
-  background: var(--texto);
-  color: var(--branco);
   font-size: 15px;
 }
-.painel .rotulo { opacity: .7; }
-#painel-tecla { color: var(--amarelo); }
+.topo nav a::before { content: counter(item) ". "; opacity: .7; }
+.topo nav li:first-child a::before { content: ""; }
+.topo nav a:hover { background: var(--azul-escuro); }
+.topo nav a[aria-current="true"] { background: var(--branco); color: var(--azul-escuro); font-weight: bold; }
 
-/* ===== Conteúdo ===== */
-main { max-width: 1000px; margin: 0 auto; padding: 16px; }
+/* =====================================================================
+   Slides
+   ===================================================================== */
+main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 32px; }
 
-.secao {
+.slide {
   background: var(--branco);
-  border-radius: 10px;
-  padding: 8px 24px 24px;
-  margin: 24px 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
-  scroll-margin-top: 60px;
-}
-.secao h2 { color: var(--azul-escuro); display: inline-block; padding: 2px 6px; }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  border-radius: 14px;
+  padding: 16px 32px 28px;
+  margin: 28px 0;
+  min-height: calc(100vh - 120px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+  scroll-margin-top: 70px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
+.etapa {
+  margin: 0;
+  color: var(--cinza);
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.titulo-slide, .capa h1 {
+  margin: 0;
+  color: var(--azul-escuro);
+  font-size: 2.1rem;
+  line-height: 1.2;
+  align-self: flex-start;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.capa h1 { font-size: 2.8rem; }
+.subtitulo { font-size: 1.25rem; margin: 0; padding: 4px 6px; border-radius: 6px; }
+
+.grade { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.bloco, .experimente, .como-fizemos { border-radius: 10px; padding: 14px 20px; }
+.bloco { background: #f6f8fc; border: 2px solid #dbe3f1; }
+.bloco h2, .bloco h3, .experimente h2, .experimente h3 { margin-top: 4px; color: var(--azul-escuro); }
+.destaque { font-size: 1.1rem; border-left: 6px solid var(--azul); }
+.experimente { background: #eef8ef; border: 2px dashed var(--verde); }
+.como-fizemos { background: #f4f1fb; border: 2px solid #d9d0f0; }
+.como-fizemos p { margin: 8px 0; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.tag-explica { background: #dbe7fb; color: var(--azul-escuro); }
+.tag-experimente { background: #d3f0d6; color: #0f5b17; }
+.tag-codigo { background: #e6defa; color: #47318a; }
+
+.regra {
+  font-size: 14px;
+  color: var(--cinza);
+  border-top: 1px solid #dbe3f1;
+  padding-top: 8px;
+}
+.aviso { background: #fff4d6; border-left: 4px solid #e0a800; padding: 8px 12px; border-radius: 6px; font-size: 16px; }
+.dica-pequena { font-size: 15px; color: var(--cinza); }
+.mensagem { font-weight: bold; min-height: 1.5em; }
+
+.proximo {
+  align-self: flex-end;
+  margin-top: auto;
+  padding: 12px 22px;
+  background: var(--azul);
+  color: var(--branco);
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+}
+.proximo:hover { background: var(--azul-escuro); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
 .card {
   border: 2px solid #dbe3f1;
   border-left: 6px solid var(--azul);
   border-radius: 8px;
   padding: 4px 16px;
-  cursor: default;
+  background: var(--branco);
 }
-.card h3 { margin: 12px 0 4px; color: var(--azul); }
+.card h3 { margin: 10px 0 4px; color: var(--azul); }
+.cards-pequenos .card { padding: 16px; text-align: center; font-weight: bold; font-size: 1.1rem; }
 
 pre {
   background: #1e1e2e;
@@ -167,17 +280,50 @@ pre {
   border-radius: 8px;
   overflow-x: auto;
   font-size: 15px;
+  line-height: 1.5;
+  margin: 8px 0;
 }
-pre code { background: none; padding: 0; }
+pre code { background: none; padding: 0; font-size: inherit; }
 
-table { width: 100%; border-collapse: collapse; }
-caption { text-align: left; font-weight: bold; padding-bottom: 8px; }
-th, td { border: 1px solid #ccd3e0; padding: 10px; text-align: left; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+caption { text-align: left; font-weight: bold; padding-bottom: 6px; }
+th, td { border: 1px solid #ccd3e0; padding: 8px 10px; text-align: left; vertical-align: top; }
 th { background: #e6e9f2; }
+.tabela-teclas td:first-child { white-space: nowrap; width: 1%; }
 
-/* ===== Certo x Errado ===== */
-.comparacao { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-.lado { border-radius: 8px; padding: 4px 16px 8px; }
+.linha-botoes { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; align-items: center; }
+.contadores { font-size: 16px; }
+
+/* Capa */
+.lista-grande li { margin-bottom: 6px; }
+.legenda-partes { list-style: none; padding: 0; }
+.legenda-partes li { margin-bottom: 6px; }
+.lista-missoes { list-style: none; padding: 0; margin: 0; }
+.lista-missoes li { padding: 6px 4px; border-bottom: 1px solid #c9e6cc; }
+.lista-missoes li::before { content: "⬜ "; }
+.lista-missoes li.feita { color: #0f5b17; font-weight: bold; }
+.lista-missoes li.feita::before { content: "✅ "; }
+.missoes-final { font-size: 1.3rem; font-weight: bold; }
+
+/* tabindex: caixas */
+.caixas { display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+.caixa {
+  flex: 1;
+  min-width: 90px;
+  padding: 14px 8px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  border: 3px solid var(--azul);
+  border-radius: 8px;
+  background: var(--branco);
+}
+.caixa code, .caixa small { font-size: 13px; font-weight: normal; }
+.caixa-cinza { border-color: #aab; color: var(--cinza); }
+
+/* Certo x errado */
+.comparacao { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.lado { border-radius: 8px; padding: 4px 16px 8px; background: var(--branco); }
 .errado { border: 3px dashed var(--vermelho); }
 .certo { border: 3px solid var(--verde); }
 .falso-botao {
@@ -189,11 +335,44 @@ th { background: #e6e9f2; }
   border-radius: 6px;
   cursor: pointer;
 }
-.mensagem { font-weight: bold; min-height: 1.5em; }
 
-/* ===== Botões ===== */
+/* Fluxo Tab → VLibras */
+.fluxo {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.fluxo li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 3px solid #ccd3e0;
+  border-radius: 10px;
+  background: #f6f8fc;
+  font-size: 15px;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.fluxo li strong { font-size: 16px; color: var(--azul-escuro); }
+.fluxo li em {
+  font-style: normal;
+  font-family: monospace;
+  font-size: 13px;
+  background: var(--branco);
+  border-radius: 4px;
+  padding: 4px 6px;
+  word-break: break-word;
+  margin-top: auto;
+}
+.fluxo li.ativo { background: var(--amarelo-claro); border-color: var(--amarelo); transform: translateY(-3px); }
+
+/* Botões */
 .botao {
-  padding: 12px 24px;
+  padding: 12px 22px;
   background: var(--azul);
   color: var(--branco);
   border: none;
@@ -203,36 +382,45 @@ th { background: #e6e9f2; }
   cursor: pointer;
 }
 .botao:hover { background: var(--azul-escuro); }
-.botao-pequeno {
-  padding: 4px 10px;
-  background: var(--branco);
-  color: var(--azul-escuro);
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-}
+.botao[aria-pressed="true"] { background: var(--vermelho); }
 
-/* ===== Formulário ===== */
-.campo { margin-bottom: 16px; }
+/* Formulário */
+.campo { margin-bottom: 14px; }
 .campo > label:first-child { display: block; font-weight: bold; margin-bottom: 4px; }
-input[type="text"], input[type="email"], select {
+input[type="text"], input[type="email"], select, textarea {
   width: 100%;
-  max-width: 400px;
   padding: 10px;
   font-size: 1rem;
+  font-family: inherit;
   border: 2px solid #8a94a6;
   border-radius: 6px;
+  background: var(--branco);
 }
-fieldset { border: 2px solid #dbe3f1; border-radius: 8px; margin-bottom: 16px; }
+textarea { margin: 8px 0; resize: vertical; }
+fieldset { border: 2px solid #c9e6cc; border-radius: 8px; margin-bottom: 14px; }
 fieldset label { margin-right: 16px; }
 input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertical-align: middle; }
 
-/* ===== Rodapé ===== */
+/* Resumo */
+.checklist li { margin-bottom: 6px; }
+.referencias li { margin-bottom: 4px; }
+.obrigado {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--azul-escuro);
+  margin: auto 0 0;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Rodapé */
 .rodape { background: var(--azul-escuro); color: var(--branco); text-align: center; padding: 24px 16px; }
 .rodape a { color: var(--amarelo); }
 
-/* ===== Tutorial inicial ===== */
+/* =====================================================================
+   Janela de ajuda
+   ===================================================================== */
 .tutorial {
   position: fixed;
   inset: 0;
@@ -246,7 +434,7 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertica
 .tutorial.escondido { display: none; }
 .tutorial-caixa {
   background: var(--branco);
-  max-width: 620px;
+  max-width: 640px;
   width: 100%;
   max-height: 100%;
   overflow-y: auto;
@@ -256,19 +444,69 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertica
 }
 .tutorial-caixa h2 { color: var(--azul-escuro); }
 .teclas { list-style: none; padding: 0; }
-.teclas li { padding: 8px; border-bottom: 1px solid #e6e9f2; }
-.dica { background: #e8f0fd; padding: 10px 14px; border-radius: 8px; }
+.teclas li { padding: 7px; border-bottom: 1px solid #e6e9f2; }
+.dica { background: #e8f0fd; padding: 10px 14px; border-radius: 8px; margin: 8px 0; }
+
+/* =====================================================================
+   Raio-X e aviso de missão
+   ===================================================================== */
+.raiox {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 800;
+  width: min(300px, calc(100vw - 24px));
+  max-height: 28vh;
+  overflow-y: auto;
+  background: rgba(20, 20, 32, .95);
+  color: #d7f7d7;
+  font-family: monospace;
+  font-size: 12px;
+  border-radius: 10px;
+  border: 2px solid #3ddc84;
+  padding: 8px 12px;
+}
+.raiox-titulo { margin: 0 0 6px; color: #3ddc84; font-weight: bold; }
+.raiox ol { margin: 0; padding-left: 20px; }
+.raiox li { margin-bottom: 4px; }
+.raiox li:first-child { color: var(--amarelo); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  z-index: 950;
+  transform: translate(-50%, 150%);
+  background: var(--verde);
+  color: var(--branco);
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+  transition: transform .3s;
+  max-width: calc(100vw - 32px);
+}
+.toast.visivel { transform: translate(-50%, 0); }
+
+/* =====================================================================
+   Tamanhos de tela
+   ===================================================================== */
+/* Telas largas: deixa espaço à direita para o avatar do VLibras */
+@media (min-width: 1150px) {
+  main { margin: 0 320px 0 auto; }
+}
+@media (min-width: 1800px) {
+  main { margin: 0 auto; }
+}
+
+@media (max-width: 900px) {
+  .grade, .comparacao { grid-template-columns: 1fr; }
+  .fluxo { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 600px) {
   body { font-size: 16px; }
-  .topo h1 { font-size: 1.5rem; }
-  .secao { padding: 8px 16px 16px; }
-}
-
-/* Telas largas: deixa espaço à direita para o avatar do VLibras não cobrir o texto */
-@media (min-width: 1100px) {
-  main { margin: 0 320px 0 auto; }
-}
-@media (min-width: 1700px) {
-  main { margin: 0 auto; }
+  .slide { padding: 12px 16px 20px; min-height: 0; }
+  .titulo-slide { font-size: 1.6rem; }
+  .capa h1 { font-size: 2rem; }
 }

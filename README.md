@@ -1,69 +1,66 @@
 # Grupo 2 – Navegação e Acessibilidade (PGW2)
 
-Protótipo do Exercício Avaliativo 4: uma página que ensina a navegar **só pelo teclado (Tab)** e,
-a cada item que recebe foco ou que o mouse passa por cima, o **VLibras** traduz o texto para Libras.
+Exercício Avaliativo 4. **O próprio site é a apresentação.** Cada slide explica um recurso,
+deixa você testar na hora e mostra o código usado. Tudo funciona só com o teclado, e o
+**VLibras** traduz para Libras cada item que recebe foco (Tab) ou que o mouse passa por cima.
 
 ## Como abrir
 
-Precisa de internet (o VLibras é carregado do site do governo).
+Precisa de internet (o VLibras vem do site do governo).
 
-- Jeito mais simples: abrir o `index.html` no navegador.
-- Se o avatar não aparecer abrindo o arquivo direto, use um servidor local:
-  - VS Code: extensão **Live Server** → botão direito no `index.html` → *Open with Live Server*; ou
-  - Terminal: `python -m http.server` na pasta do projeto e abrir `http://localhost:8000`.
+- **GitHub Pages** (recomendado): Settings → Pages → Branch `main` / `(root)` → Save.
+- **No computador**: abrir com a extensão *Live Server* do VS Code, ou rodar
+  `python -m http.server` na pasta e abrir `http://localhost:8000`.
 
-## O que a página demonstra
+## Como usar
 
-| Recurso | Onde está no código |
+| Tecla | O que faz |
 |---|---|
-| Tutorial inicial com as teclas (abre sozinho; `?` ou botão **Ajuda** reabre; `Esc` fecha) | `#tutorial` no HTML, `abrirTutorial()` no JS |
-| **Skip link** "Pular para o conteúdo" (aparece no 1º Tab) | `.pular-link` no HTML e CSS |
-| **Foco visível** (borda amarela) | `:focus-visible` no CSS |
-| **Tab / Shift+Tab** em cards, links, botões e formulário | `tabindex="0"` nos cards |
-| `tabindex="-1"` para receber foco só por JavaScript | `<main>`, `<nav>`, `<footer>` |
-| **Atalhos Alt+1 a Alt+4** (padrão eMAG do governo) | objeto `atalhos` no JS |
-| Prender o Tab dentro da janela de ajuda (*focus trap*) | `keydown` do `tutorial` no JS |
-| **Certo x Errado**: `<div onclick>` (Tab pula) x `<button>` | seção 4 |
-| Formulário com `<label>`, `fieldset`/`legend` e foco no campo com erro | seção 6 |
-| **VLibras** traduzindo automaticamente no foco e no mouse | `agendarTraducao()` e `traduzir()` no JS |
-| **Voz** opcional (Web Speech API) simulando um leitor de tela | `falar()` no JS |
-| Painel que mostra a tecla apertada e o texto enviado ao VLibras | `.painel` |
+| `Tab` / `Shift+Tab` | próximo / item anterior |
+| `→` / `←` | próximo / slide anterior |
+| `Enter` / `Espaço` | ativa links e botões / marca caixas |
+| `Alt+1` `Alt+2` `Alt+3` `Alt+4` | conteúdo, menu, formulário, rodapé (padrão eMAG) |
+| `?` / `Esc` | abre / fecha a ajuda |
 
-### Como a tradução automática funciona
+Na barra azul do topo você pode ligar **Voz** (leitura em voz alta) e **Raio-X**
+(mostra, ao vivo, o que o JavaScript está fazendo).
 
-1. O widget oficial é instalado com o código do governo:
-   ```html
-   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-   <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
-   ```
-2. Ao carregar, o script abre o avatar (`window.VLibrasWidget.open()`).
-3. Os eventos `focusin` (teclado) e `mouseover` (mouse) pegam o item atual.
-4. O texto vem do atributo `data-libras` (texto curto e simples, pensado para tradução);
-   se não houver, usa o `aria-label`, o `<label>` do campo ou o próprio texto.
-5. Espera 600 ms parado no item (se apertar Tab várias vezes rápido, só o último é traduzido)
-   e chama `window.plugin.translate(texto)`, função que o VLibras cria quando o avatar carrega.
+## Slides
 
-> Observação: o VLibras sinaliza em Libras, ele **não fala**. A opção **Voz** foi adicionada para
-> mostrar também como um leitor de tela lê a página para pessoas cegas.
->
-> `window.plugin.translate` não faz parte da documentação oficial do widget; funciona na versão atual
-> (7.x). Se o governo mudar o widget, o VLibras continua funcionando do jeito normal (clicar no texto).
+| # | Slide | Experimente |
+|---|---|---|
+| – | Início | lista de **10 missões** que se completam sozinhas |
+| 1 | Por que acessibilidade? | — (conceitos, números e leis) |
+| 2 | Navegar pelo teclado | contador de Tab e Shift+Tab |
+| 3 | Foco visível | botão que **desliga o foco** para sentir a diferença |
+| 4 | Skip link | volta ao começo da página para testar o “Pular para o conteúdo” |
+| 5 | Atalhos | Alt+1..4 |
+| 6 | Ordem do Tab e `tabindex` | caixas com `tabindex="0"`, sem tabindex e `"-1"` |
+| 7 | Certo x Errado | `<div onclick>` x `<button>` |
+| 8 | Formulário | `label`, `fieldset`, foco no campo com erro |
+| 9 | Janelas (modal) | foco preso na janela, Esc fecha, foco volta |
+| 10 | VLibras | escreva uma frase e o avatar traduz |
+| 11 | Tab + VLibras | **diagrama dos 5 passos que acende ao vivo** |
+| 12 | Bônus: voz | Web Speech API simulando um leitor de tela |
+| 13 | Resumo | checklist, missões e referências |
 
-## Roteiro sugerido para a demonstração (≈ 6 min)
+## Como a tradução automática funciona
 
-1. Abrir a página → tutorial aparece e o avatar já sinaliza o título.
-2. `Esc` → apertar `Tab` → aparece o **skip link** → `Enter` pula o menu.
-3. `Tab` / `Shift+Tab` pelos cards → mostrar a borda de foco e o avatar traduzindo cada um.
-4. `Alt+2` (menu), `Alt+3` (formulário), `Alt+4` (rodapé), `Alt+1` (conteúdo).
-5. Seção **Certo x Errado**: mostrar que o Tab pula a `div` e para no `button`.
-6. Formulário só pelo teclado: setas no select/radio, `Espaço` no checkbox, enviar vazio → foco volta para o campo com erro.
-7. Passar o mouse por cima dos itens → mesma tradução.
-8. Ligar **Voz** → navegar com Tab ouvindo a leitura.
+1. **Evento**: `focusin` (Tab) ou `mousemove` (mouse).
+2. **Texto**: `data-libras` → `aria-label` → `<label>` → texto do elemento.
+3. **Espera 600 ms**: se apertar Tab rápido, só o último item é traduzido.
+4. **Envia**: `window.plugin.translate(texto)`.
+5. **Avatar sinaliza**.
 
-## Estrutura
+O item traduzido recebe fundo amarelo-claro com **texto preto** (classe `.traduzindo`) para ficar fácil de ler.
+
+> `window.plugin.translate` não está na documentação oficial do VLibras. Funciona na versão atual (7.x).
+> Se mudar, o VLibras continua funcionando do jeito normal (clicando no texto).
+
+## Arquivos
 
 ```
-index.html
-css/estilo.css
-js/scripts.js
+index.html       os slides (HTML comentado)
+css/estilo.css   visual, foco visível, skip link
+js/scripts.js    teclado, missões, Raio-X, VLibras e voz (dividido em 10 partes comentadas)
 ```
