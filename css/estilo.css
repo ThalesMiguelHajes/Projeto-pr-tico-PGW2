@@ -531,3 +531,41 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertica
   .titulo-slide { font-size: 1.6rem; }
   .capa h1 { font-size: 2rem; }
 }
+
+/* =====================================================================
+   "Como fizemos": código separado por arquivo (HTML, CSS, JavaScript)
+   ===================================================================== */
+.arquivos { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.arquivo {
+  background: var(--branco);
+  border: 1px solid #d9d0f0;
+  border-left: 8px solid;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.arquivo pre { margin: 6px 0 0; }
+.arq-html { border-left-color: #E44D26; }
+.arq-css  { border-left-color: #264DE4; }
+.arq-js   { border-left-color: #D9B800; }
+.arquivo-titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0;
+  font-weight: bold;
+}
+.arquivo-titulo span { font-family: monospace; font-weight: normal; color: var(--cinza); font-size: 15px; }
+.arquivo-nada { margin: 6px 0 2px; color: var(--cinza); font-style: italic; }
+.copiar {
+  margin-left: auto;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--azul-escuro);
+  background: var(--branco);
+  border: 2px solid var(--azul-escuro);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.copiar:hover { background: #e8f0fd; }

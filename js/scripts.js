@@ -623,6 +623,28 @@ document.getElementById("btn-traduzir-frase").addEventListener("click", function
 });
 
 
+// --- Botão "Copiar" em cada código do "Como fizemos" ---
+document.querySelectorAll(".arquivo").forEach(function (arquivo) {
+  const codigo = arquivo.querySelector("pre");
+  if (!codigo) return;                                   // "Nada aqui": sem botão
+  const nome = arquivo.querySelector(".arquivo-titulo").firstChild.textContent.trim();
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.className = "copiar";
+  botao.textContent = "Copiar";
+  botao.setAttribute("aria-label", "Copiar o código " + nome);
+  botao.dataset.libras = "Copiar o código";
+  botao.addEventListener("click", function () {
+    navigator.clipboard.writeText(codigo.textContent).then(function () {
+      botao.textContent = "Copiado ✓";
+      mostrarToast("Código copiado!");
+      setTimeout(function () { botao.textContent = "Copiar"; }, 2000);
+    });
+  });
+  arquivo.querySelector(".arquivo-titulo").appendChild(botao);
+});
+
+
 // ---------------------------------------------------------------------
 // 10. Início
 // ---------------------------------------------------------------------

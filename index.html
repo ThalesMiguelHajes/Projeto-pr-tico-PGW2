@@ -198,14 +198,29 @@
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-        <p><strong>Nenhum código especial!</strong> Links, botões e campos (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>) já recebem foco sozinhos. O segredo é usar a <strong>tag certa</strong>.</p>
-<pre tabindex="0" data-libras="Código: botões normais já recebem foco"><code>&lt;button type="button"&gt;Botão 1&lt;/button&gt;   &lt;!-- já recebe foco --&gt;
-&lt;a href="#teclado"&gt;Teclado&lt;/a&gt;           &lt;!-- já recebe foco --&gt;
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>Nenhum código especial! Links, botões e campos já recebem foco sozinhos. O segredo é usar a <strong>tag certa</strong>.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;!-- Já recebem foco, sem nenhum código extra --&gt;
+&lt;a href="#teclado"&gt;Teclado&lt;/a&gt;
+&lt;button type="button"&gt;Botão 1&lt;/button&gt;
+&lt;input type="text" id="nome"&gt;
 
-&lt;!-- Um bloco de texto NÃO recebe foco. Para o VLibras traduzir os
-     textos desta apresentação, colocamos tabindex="0" neles: --&gt;
-&lt;article class="card" tabindex="0" data-libras="..."&gt; ... &lt;/article&gt;</code></pre>
+&lt;!-- Um bloco de texto NÃO recebe foco.
+     Para o Tab parar nele, use tabindex="0" --&gt;
+&lt;article class="card" tabindex="0"&gt; ... &lt;/article&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório. O foco visível é o próximo slide.</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+            <p class="arquivo-nada">Nada: o navegador já faz o Tab e o Shift+Tab sozinho.</p>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#foco" data-libras="Próximo: foco visível">Próximo: Foco visível →</a>
     </section>
@@ -243,20 +258,33 @@
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
         <p><code>:focus-visible</code> só mostra a borda quando a pessoa usa o <strong>teclado</strong> (ao clicar com mouse ela não aparece).</p>
-<pre tabindex="0" data-libras="Código CSS do foco visível"><code>/* css/estilo.css */
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+            <p class="arquivo-nada">Nada: a regra vale para todos os itens que recebem foco.</p>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+<pre tabindex="0" data-libras="Código CSS"><code>/* Borda amarela grossa só quando o foco vem do teclado */
 :focus-visible {
-  outline: 4px solid #ffcd07;      /* borda amarela grossa  */
+  outline: 4px solid #ffcd07;      /* borda amarela grossa */
   outline-offset: 3px;             /* afasta a borda do item */
   box-shadow: 0 0 0 7px #1b1b1b;   /* contorno escuro para dar contraste */
 }
 
-/* ❌ NUNCA faça isso sem colocar outro estilo no lugar: */
-*:focus { outline: none; }
+/* Topo fixo na página? Desconta a altura dele ao rolar até o foco */
+html { scroll-padding-top: 70px; }
 
-/* A barra do topo é fixa: ao rolar até um item, desconta a altura dela */
-html { scroll-padding-top: calc(var(--altura-painel) + 12px); }</code></pre>
+/* ❌ NUNCA faça isso sem colocar outro estilo no lugar:
+   *:focus { outline: none; }                              */</code></pre>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+            <p class="arquivo-nada">Nada obrigatório. (No nosso site, o JS só mede a altura da barra fixa do topo para o scroll-padding-top.)</p>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#skip" data-libras="Próximo: pular para o conteúdo">Próximo: Pular para o conteúdo →</a>
     </section>
@@ -286,16 +314,42 @@ html { scroll-padding-top: calc(var(--altura-painel) + 12px); }</code></pre>
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código do link para pular ao conteúdo"><code>&lt;!-- index.html: primeiro elemento dentro do &lt;body&gt; --&gt;
-&lt;a href="#conteudo" class="pular-link"&gt;Pular para o conteúdo principal&lt;/a&gt;
-...
-&lt;main id="conteudo" tabindex="-1"&gt; ... &lt;/main&gt;   &lt;!-- destino do link --&gt;
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>São só HTML e CSS. O <code>tabindex="-1"</code> no <code>&lt;main&gt;</code> deixa ele receber o foco quando o link é usado.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;body&gt;
+  &lt;!-- PRIMEIRO elemento dentro do body --&gt;
+  &lt;a href="#conteudo" class="pular-link"&gt;Pular para o conteúdo principal&lt;/a&gt;
 
-/* css/estilo.css: fica fora da tela e "desce" quando recebe foco */
-.pular-link        { position: absolute; top: -100px; }
-.pular-link:focus  { top: 0; }</code></pre>
-        <p>O <code>tabindex="-1"</code> no <code>&lt;main&gt;</code> deixa ele receber o foco quando o link é usado (explicado no slide do tabindex).</p>
+  &lt;header&gt; ... &lt;/header&gt;
+  &lt;nav&gt; ... &lt;/nav&gt;
+
+  &lt;!-- destino do link; tabindex="-1" deixa ele receber o foco --&gt;
+  &lt;main id="conteudo" tabindex="-1"&gt; ... &lt;/main&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+<pre tabindex="0" data-libras="Código CSS"><code>.pular-link {
+  position: absolute;
+  top: -100px;              /* escondido fora da tela */
+  left: 16px;
+  padding: 12px 20px;
+  background: #ffcd07;
+  color: #1b1b1b;
+  font-weight: bold;
+}
+.pular-link:focus {
+  top: 0;                   /* aparece no primeiro Tab */
+}</code></pre>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+            <p class="arquivo-nada">Nada: o href="#conteudo" já leva o foco até o main.</p>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#atalhos" data-libras="Próximo: atalhos">Próximo: Atalhos de teclado →</a>
     </section>
@@ -331,17 +385,48 @@ html { scroll-padding-top: calc(var(--altura-painel) + 12px); }</code></pre>
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código JavaScript dos atalhos"><code>// js/scripts.js
-const atalhos = { "1": "conteudo", "2": "menu", "3": "formulario", "4": "rodape" };
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>Há duas formas: <strong>accesskey</strong> (só HTML) ou <strong>JavaScript</strong> (controle total). Nos dois casos, o destino precisa de <code>id</code> e de <code>tabindex="-1"</code>.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;!-- Forma 1: accesskey (sem JavaScript). Mostre a tecla no texto! --&gt;
+&lt;a href="#conteudo" accesskey="1"&gt;Ir para o conteúdo [1]&lt;/a&gt;
+&lt;a href="#menu"     accesskey="2"&gt;Ir para o menu [2]&lt;/a&gt;
+&lt;a href="#formulario" accesskey="3"&gt;Ir para o formulário [3]&lt;/a&gt;
+&lt;a href="#rodape"   accesskey="4"&gt;Ir para o rodapé [4]&lt;/a&gt;
 
-document.addEventListener("keydown", function (evento) {
-  if (evento.altKey &amp;&amp; atalhos[evento.key]) {   // Alt + número?
-    evento.preventDefault();                       // cancela o padrão do navegador
-    irPara(atalhos[evento.key]);                   // move o FOCO (não só a rolagem)
+&lt;!-- Os destinos: id + tabindex="-1" --&gt;
+&lt;nav id="menu" tabindex="-1"&gt; ... &lt;/nav&gt;
+&lt;main id="conteudo" tabindex="-1"&gt; ... &lt;/main&gt;
+&lt;section id="formulario" tabindex="-1"&gt; ... &lt;/section&gt;
+&lt;footer id="rodape" tabindex="-1"&gt; ... &lt;/footer&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório.</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>// Forma 2: JavaScript (Alt + número)
+const atalhos = {
+  Digit1: "conteudo", Digit2: "menu",
+  Digit3: "formulario", Digit4: "rodape"
+};
+
+window.onload = function () {
+  document.addEventListener("keydown", tratarAtalhos);
+};
+
+function tratarAtalhos(e) {
+  if (e.altKey &amp;&amp; atalhos[e.code]) {     // Alt + 1, 2, 3 ou 4?
+    e.preventDefault();                  // cancela o atalho do navegador
+    let alvo = document.getElementById(atalhos[e.code]);
+    alvo.focus();                        // move o FOCO (e a tela vai junto)
   }
-});</code></pre>
-        <p>Os links da barra azul (<code>&lt;a href="#menu"&gt;</code>) funcionam até <strong>sem JavaScript</strong>. O atalho é um extra.</p>
+}</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#tabindex" data-libras="Próximo: ordem do Tab">Próximo: A ordem do Tab e o tabindex →</a>
     </section>
@@ -381,13 +466,28 @@ document.addEventListener("keydown", function (evento) {
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código do tabindex"><code>&lt;div class="caixa" tabindex="0"&gt;A&lt;/div&gt;
-&lt;div class="caixa"&gt;B&lt;/div&gt;
-&lt;div class="caixa" id="caixa-c" tabindex="-1"&gt;C&lt;/div&gt;
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>O botão usa <code>focus()</code> para levar o foco até a caixa C, que tem <code>tabindex="-1"</code>.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;div class="caixa" tabindex="0"&gt;A&lt;/div&gt;                &lt;!-- entra no Tab --&gt;
+&lt;div class="caixa"&gt;B&lt;/div&gt;                             &lt;!-- o Tab pula --&gt;
+&lt;div class="caixa" id="caixa-c" tabindex="-1"&gt;C&lt;/div&gt;  &lt;!-- só pelo JS --&gt;
 
-// js/scripts.js – o botão leva o foco até a caixa C
-document.getElementById("caixa-c").focus();</code></pre>
+&lt;button type="button" id="btn-focar-c"&gt;Focar a caixa C&lt;/button&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório (só a aparência das caixas).</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>document.getElementById("btn-focar-c").addEventListener("click", function () {
+  document.getElementById("caixa-c").focus();   // foco pelo JavaScript
+});</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#comparacao" data-libras="Próximo: certo e errado">Próximo: Certo x Errado →</a>
     </section>
@@ -421,12 +521,33 @@ document.getElementById("caixa-c").focus();</code></pre>
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código do exemplo certo e errado"><code>&lt;!-- ❌ precisaria de tabindex="0", role="button" e JavaScript para Enter e Espaço --&gt;
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>O mesmo código de clique serve para os dois. O <code>button</code> funciona com mouse, Enter e Espaço; a <code>div</code>, só com o mouse.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;!-- ❌ Errado: não recebe foco e não funciona com Enter --&gt;
 &lt;div class="falso-botao" id="div-botao"&gt;Enviar (div)&lt;/div&gt;
 
-&lt;!-- ✅ já vem com foco, Enter, Espaço e é anunciado como "botão" --&gt;
-&lt;button type="button" id="btn-certo"&gt;Enviar (button)&lt;/button&gt;</code></pre>
+&lt;!-- ✅ Certo: foco, Enter e Espaço já funcionam --&gt;
+&lt;button type="button" id="btn-certo"&gt;Enviar (button)&lt;/button&gt;
+
+&lt;p id="msg" role="status"&gt;&lt;/p&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório (só a aparência).</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>document.getElementById("btn-certo").addEventListener("click", function () {
+  document.getElementById("msg").textContent = "O button funcionou!";
+});
+
+// Para "consertar" a div seria preciso tabindex="0", role="button"
+// e tratar Enter e Espaço no keydown. O &lt;button&gt; já vem com tudo isso.</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#formulario" data-libras="Próximo: formulário">Próximo: Formulário pelo teclado →</a>
     </section>
@@ -482,13 +603,48 @@ document.getElementById("caixa-c").focus();</code></pre>
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código do formulário"><code>&lt;label for="nome"&gt;Nome&lt;/label&gt;          &lt;!-- o "for" aponta para o id --&gt;
-&lt;input type="text" id="nome"&gt;
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>O <code>for</code> do label aponta para o <code>id</code> do campo. No erro, a mensagem aparece e o foco volta para o campo.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;form id="form-contato" novalidate&gt;
+  &lt;label for="nome"&gt;Nome&lt;/label&gt;            &lt;!-- "for" = id do campo --&gt;
+  &lt;input type="text" id="nome"&gt;
 
-// js/scripts.js – no envio, se o nome estiver vazio:
-msgForm.textContent = "Preencha o nome.";   // role="alert": o leitor de tela fala
-nome.focus();                               // o foco volta para o campo com erro</code></pre>
+  &lt;label for="email"&gt;E-mail&lt;/label&gt;
+  &lt;input type="email" id="email"&gt;
+
+  &lt;fieldset&gt;                                 &lt;!-- agrupa as opções --&gt;
+    &lt;legend&gt;Como prefere a resposta?&lt;/legend&gt;
+    &lt;label&gt;&lt;input type="radio" name="retorno" checked&gt; E-mail&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="retorno"&gt; Vídeo em Libras&lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+  &lt;p id="msg-form" role="alert"&gt;&lt;/p&gt;         &lt;!-- o leitor de tela lê o erro --&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório (o foco visível já vale para os campos).</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>document.getElementById("form-contato").addEventListener("submit", function (e) {
+  e.preventDefault();                       // não recarrega a página
+  let nome = document.getElementById("nome");
+  let msg = document.getElementById("msg-form");
+
+  if (nome.value.trim() === "") {
+    msg.textContent = "Preencha o nome.";
+    nome.focus();                           // o foco vai para o campo com erro
+    return;
+  }
+  msg.textContent = "Mensagem enviada!";
+});</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#armadilha" data-libras="Próximo: janelas">Próximo: Janelas e o foco →</a>
     </section>
@@ -518,16 +674,36 @@ nome.focus();                               // o foco volta para o campo com err
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código que prende o foco na janela"><code>// js/scripts.js – se está no último item e aperta Tab, volta para o primeiro
-tutorial.addEventListener("keydown", function (evento) {
-  if (evento.key !== "Tab") return;
-  if (evento.shiftKey &amp;&amp; document.activeElement === primeiro) {
-    evento.preventDefault();  ultimo.focus();
-  } else if (!evento.shiftKey &amp;&amp; document.activeElement === ultimo) {
-    evento.preventDefault();  primeiro.focus();
-  }
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>O jeito mais simples é a tag <code>&lt;dialog&gt;</code>: com <code>showModal()</code> o navegador leva o foco para dentro, prende o Tab e fecha com Esc. Nesta página fizemos a janela “à mão” (com <code>keydown</code>) para mostrar como funciona por dentro.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;button type="button" id="abrirAjuda"&gt;Ajuda&lt;/button&gt;
+
+&lt;dialog id="ajuda"&gt;
+  &lt;h2&gt;Atalhos do site&lt;/h2&gt;
+  &lt;p&gt;Alt + 1: conteúdo · Alt + 2: menu&lt;/p&gt;
+  &lt;button type="button" id="fecharAjuda"&gt;Fechar&lt;/button&gt;
+&lt;/dialog&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório (o dialog já vem com estilo).</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>let janela = document.getElementById("ajuda");
+
+document.getElementById("abrirAjuda").addEventListener("click", function () {
+  janela.showModal();   // abre, leva o foco para dentro e prende o Tab
+});
+
+document.getElementById("fecharAjuda").addEventListener("click", function () {
+  janela.close();       // fecha (Esc também fecha) e o foco volta ao botão
 });</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#vlibras" data-libras="Próximo: VLibras">Próximo: VLibras →</a>
     </section>
@@ -558,11 +734,36 @@ tutorial.addEventListener("keydown", function (evento) {
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-        <p>Instalar o VLibras num site são <strong>só duas linhas</strong>, coladas antes do <code>&lt;/body&gt;</code>:</p>
-<pre tabindex="0" data-libras="Código para instalar o VLibras"><code>&lt;script src="https://vlibras.gov.br/app/vlibras-plugin.js"&gt;&lt;/script&gt;
-&lt;script&gt; new window.VLibras.Widget('https://vlibras.gov.br/app'); &lt;/script&gt;</code></pre>
-        <p>Isso cria o botão azul na lateral. O uso normal é: clicar no botão, depois clicar num texto. No próximo slide mostramos como fizemos ele traduzir <strong>sozinho</strong> com o <kbd>Tab</kbd>.</p>
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>Instalar o VLibras é <strong>só HTML</strong>: o botão azul aparece na lateral. O uso normal é clicar no botão e depois em um texto. No próximo slide, o JavaScript faz ele traduzir <strong>sozinho</strong> com o Tab.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;!-- Antes do &lt;/body&gt;. Só esta linha já mostra o botão azul. --&gt;
+&lt;script src="https://vlibras.gov.br/app/vlibras-plugin.js"&gt;&lt;/script&gt;
+
+&lt;!-- Opcional: escolher o avatar e o lado da tela --&gt;
+&lt;script&gt;
+  new window.VLibras.Widget({
+    rootPath: "https://vlibras.gov.br/app",
+    avatar: "hosana",   // icaro (padrão), hosana, guga ou random
+    position: "L"       // R = direita (padrão), L = esquerda
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+<pre tabindex="0" data-libras="Código CSS"><code>/* Opcional: o foco do botão azul igual ao do resto do site */
+:root {
+  --vlibras-btn-focus-visible-outline: 4px solid #ffcd07;
+  --vlibras-btn-focus-visible-shadow: 0 0 0 7px #1b1b1b;
+}</code></pre>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+            <p class="arquivo-nada">Nada para o uso normal. Para traduzir sozinho no Tab e no mouse, veja o próximo slide.</p>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#integracao" data-libras="Próximo: Tab e VLibras juntos">Próximo: Tab + VLibras juntos →</a>
     </section>
@@ -597,23 +798,73 @@ tutorial.addEventListener("keydown", function (evento) {
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código que liga o Tab ao VLibras"><code>// 1. Evento: alguém recebeu foco pelo teclado
-document.addEventListener("focusin", function (evento) {
-  agendarTraducao(evento.target);
-});
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>Este é o exemplo completo e testado (está no GitHub em <code>docs/exemplo-vlibras-tab</code>). O atributo <code>data-libras</code> guarda uma frase <strong>curta e simples</strong>, que o VLibras traduz melhor que o texto inteiro.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;body&gt;
+  &lt;!-- data-libras: a frase que o avatar vai traduzir --&gt;
+  &lt;a href="#contato" data-libras="Ir para o contato"&gt;Contato&lt;/a&gt;
+  &lt;button type="button" data-libras="Botão salvar"&gt;Salvar&lt;/button&gt;
 
-// 2 e 3. Pega o texto e espera 600 ms (cancela se outro item receber foco antes)
-function agendarTraducao(elemento) {
+  &lt;!-- tabindex="0": para o Tab parar num item que não é link nem botão --&gt;
+  &lt;article tabindex="0" data-libras="Bom dia a todos"&gt;
+    &lt;h2&gt;Bom dia&lt;/h2&gt;
+    &lt;p&gt;Texto do cartão.&lt;/p&gt;
+  &lt;/article&gt;
+
+  &lt;!-- 1º o VLibras, 2º o nosso script --&gt;
+  &lt;script src="https://vlibras.gov.br/app/vlibras-plugin.js"&gt;&lt;/script&gt;
+  &lt;script src="js/script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório. (Aqui no site, a classe .traduzindo pinta de amarelo o item que está sendo traduzido.)</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>let temporizador;      // guarda o setTimeout agendado
+let itemAtual = null;  // último item agendado
+
+window.onload = function () {
+  window.VLibrasWidget.open();                          // abre o avatar
+  document.addEventListener("focusin", aoFocar);        // Tab
+  document.addEventListener("mousemove", aoMoverMouse); // mouse
+};
+
+// Tab: o focusin dispara no elemento que recebeu o foco (e.target)
+function aoFocar(e) {
+  agendarTraducao(e.target);
+}
+
+// Mouse: closest acha o item com data-libras (mesmo com o mouse no &lt;p&gt; de dentro)
+function aoMoverMouse(e) {
+  let item = e.target.closest("[data-libras]");
+  if (item &amp;&amp; item !== itemAtual) {      // só quando muda de item
+    agendarTraducao(item);
+  }
+}
+
+// Espera 600 ms: se outro item receber foco antes, cancela o anterior
+function agendarTraducao(item) {
+  itemAtual = item;
+  let texto = item.dataset.libras || item.textContent;
   clearTimeout(temporizador);
   temporizador = setTimeout(function () {
-    traduzir(textoDoElemento(elemento));
+    traduzir(texto);
   }, 600);
 }
 
-// 4. Manda para o VLibras (essa função é criada quando o avatar carrega)
-window.plugin.translate(texto);</code></pre>
-        <p><strong>Por que o atributo <code>data-libras</code>?</strong> Os atributos <code>data-*</code> guardam informações extras no HTML. Usamos para escrever um texto <strong>curto e simples</strong>, que o VLibras traduz melhor que o texto completo.</p>
+// Manda o texto para o avatar (a função existe depois que ele carrega)
+function traduzir(texto) {
+  if (window.plugin &amp;&amp; window.plugin.translate) {
+    window.plugin.translate(texto);
+  }
+}</code></pre>
+          </div>
+        </div>
         <p class="aviso">⚠️ <code>window.plugin.translate</code> não está na documentação oficial do VLibras. Funciona na versão atual (7.x), mas pode mudar. Se mudar, o VLibras continua funcionando do jeito normal (clicando no texto).</p>
       </div>
       <a class="proximo" href="#voz" data-libras="Próximo: voz">Próximo: Bônus – voz →</a>
@@ -644,13 +895,34 @@ window.plugin.translate(texto);</code></pre>
       </div>
 
       <div class="como-fizemos">
-        <span class="tag tag-codigo">🔧 Como fizemos</span>
-<pre tabindex="0" data-libras="Código da voz"><code>function falar(texto) {
-  window.speechSynthesis.cancel();                    // para a fala anterior
-  const fala = new SpeechSynthesisUtterance(texto);   // cria a fala
-  fala.lang = "pt-BR";                                // em português
-  window.speechSynthesis.speak(fala);                 // fala!
-}</code></pre>
+        <span class="tag tag-codigo">🔧 Como fizemos: o que vai em cada arquivo</span>
+        <p>A voz usa a <strong>Web Speech API</strong>, que já vem no navegador. Não precisa instalar nada.</p>
+        <div class="arquivos">
+          <div class="arquivo arq-html">
+            <p class="arquivo-titulo">📄 HTML <span>index.html</span></p>
+<pre tabindex="0" data-libras="Código HTML"><code>&lt;label&gt;&lt;input type="checkbox" id="opt-voz"&gt; Voz&lt;/label&gt;</code></pre>
+          </div>
+          <div class="arquivo arq-css">
+            <p class="arquivo-titulo">🎨 CSS <span>css/estilo.css</span></p>
+            <p class="arquivo-nada">Nada obrigatório.</p>
+          </div>
+          <div class="arquivo arq-js">
+            <p class="arquivo-titulo">⚙️ JavaScript <span>js/script.js</span></p>
+<pre tabindex="0" data-libras="Código JavaScript"><code>function falar(texto) {
+  window.speechSynthesis.cancel();                  // para a fala anterior
+  let fala = new SpeechSynthesisUtterance(texto);   // cria a fala
+  fala.lang = "pt-BR";                              // em português
+  window.speechSynthesis.speak(fala);               // fala!
+}
+
+// Exemplo: falar o item que recebeu foco, se a voz estiver ligada
+document.addEventListener("focusin", function (e) {
+  if (document.getElementById("opt-voz").checked) {
+    falar(e.target.textContent);
+  }
+});</code></pre>
+          </div>
+        </div>
       </div>
       <a class="proximo" href="#resumo" data-libras="Próximo: resumo">Próximo: Resumo →</a>
     </section>
