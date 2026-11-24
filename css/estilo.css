@@ -16,7 +16,14 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* A barra preta do topo é fixa (sticky). O scroll-padding-top faz o navegador
+   descontar a altura dela sempre que rola até um item: atalhos, links internos
+   e o próprio Tab. Sem isso, o item com foco fica ESCONDIDO atrás da barra.
+   A altura (--altura-painel) é medida pelo JavaScript, que também confere
+   depois de cada foco se o item ficou visível (função mostrarNaTela). */
+html {
+  scroll-padding-top: calc(var(--altura-painel, 60px) + 12px);
+}
 
 body {
   margin: 0;
@@ -147,7 +154,14 @@ a { color: var(--azul); }
   gap: 4px 24px;
   padding: 8px 16px;
 }
-.painel-texto { flex: 1; min-width: 200px; }
+/* Texto traduzido sempre em UMA linha (com "…"), para a barra não mudar de altura */
+.painel-texto {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .painel .rotulo { opacity: .7; }
 #painel-tecla { color: var(--amarelo); }
 .link-missoes { color: var(--branco); text-decoration: none; }
@@ -193,7 +207,6 @@ main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 32px; }
   margin: 28px 0;
   min-height: calc(100vh - 120px);
   box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
-  scroll-margin-top: 70px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -502,6 +515,14 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertica
 @media (max-width: 900px) {
   .grade, .comparacao { grid-template-columns: 1fr; }
   .fluxo { grid-template-columns: 1fr; }
+}
+
+/* Celular: barra com 2 linhas fixas (slide + missões / traduzindo).
+   "Tecla" some porque no celular não se usa teclado físico. */
+@media (max-width: 700px) {
+  .painel-info { gap: 2px 16px; font-size: 14px; }
+  .painel-tecla { display: none; }
+  .painel-texto { order: 5; flex-basis: 100%; }
 }
 
 @media (max-width: 600px) {

@@ -56,7 +56,7 @@
   <!-- Painel fixo: tecla apertada, texto traduzido, progresso e missões -->
   <div class="painel">
     <div class="painel-info">
-      <div><span class="rotulo">Tecla:</span> <strong id="painel-tecla">—</strong></div>
+      <div class="painel-tecla"><span class="rotulo">Tecla:</span> <strong id="painel-tecla">—</strong></div>
       <div class="painel-texto"><span class="rotulo">Traduzindo:</span> <strong id="painel-texto">—</strong></div>
       <div><span class="rotulo">Slide</span> <strong id="progresso-texto">1 de 14</strong></div>
       <div><a href="#missoes" class="link-missoes" data-libras="Missões cumpridas">🎯 Missões <strong id="missoes-contador">0/10</strong></a></div>
@@ -221,7 +221,8 @@
           <p>Quem usa mouse vê a <strong>setinha</strong>. Quem usa teclado precisa ver <strong>onde está o foco</strong>.</p>
           <p>O navegador mostra uma borda fina, mas muitos sites apagam com <code>outline: none</code> porque acham "feio". Para quem usa teclado, é como <strong>esconder a setinha do mouse</strong>.</p>
           <p>Aqui usamos uma borda <strong style="background:#ffcd07;padding:0 4px">amarela e grossa</strong>, fácil de ver.</p>
-          <p class="regra">WCAG 2.4.7 – Foco visível (nível AA).</p>
+          <p>E o item com foco não pode ficar <strong>escondido</strong>: a barra preta do topo é fixa, então fazemos a tela rolar para o item nunca ficar atrás dela.</p>
+          <p class="regra">WCAG 2.4.7 – Foco visível (AA) · WCAG 2.4.11 – Foco não encoberto (AA)</p>
         </div>
 
         <div class="experimente">
@@ -252,7 +253,10 @@
 }
 
 /* ❌ NUNCA faça isso sem colocar outro estilo no lugar: */
-*:focus { outline: none; }</code></pre>
+*:focus { outline: none; }
+
+/* A barra do topo é fixa: ao rolar até um item, desconta a altura dela */
+html { scroll-padding-top: calc(var(--altura-painel) + 12px); }</code></pre>
       </div>
       <a class="proximo" href="#skip" data-libras="Próximo: pular para o conteúdo">Próximo: Pular para o conteúdo →</a>
     </section>

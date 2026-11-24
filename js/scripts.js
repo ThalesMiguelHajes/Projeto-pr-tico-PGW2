@@ -217,10 +217,13 @@ document.addEventListener("keydown", function (evento) {
   }
 
   // Alt + 1..4: pula para a região (padrão eMAG)
-  if (evento.altKey && atalhos[evento.key]) {
+  // evento.code ("Digit2") é a tecla física: funciona mesmo quando o Alt muda o
+  // caractere (no Mac, Option+2 vira "™")
+  const numero = evento.code.replace("Digit", "").replace("Numpad", "");
+  if (evento.altKey && atalhos[numero]) {
     evento.preventDefault();
-    raioX("Atalho Alt+" + evento.key + " → irPara('" + atalhos[evento.key] + "')");
-    irPara(atalhos[evento.key]);
+    raioX("Atalho Alt+" + numero + " → irPara('" + atalhos[numero] + "')");
+    irPara(atalhos[numero]);
     cumprir("atalho");
     return;
   }
@@ -261,14 +264,21 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   });
 });
 
+let alvoDoAtalho = null;   // o elemento que irPara() está focando
+
 function irPara(id) {
   const alvo = document.getElementById(id);
+  alvoDoAtalho = alvo;
   // Regiões como <main> e <section> não recebem foco: o tabindex="-1" permite
   if (!alvo.hasAttribute("tabindex") && !alvo.matches("a, button, input, select, textarea")) {
     alvo.setAttribute("tabindex", "-1");
   }
   alvo.focus({ preventScroll: true });
-  alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+  // A tela acompanha o foco. O scroll-padding-top do CSS desconta a barra fixa.
+  // Salto longo (mais de 2 telas) é instantâneo; salto curto é suave.
+  const distancia = Math.abs(alvo.getBoundingClientRect().top);
+  const tipo = distancia > window.innerHeight * 2 ? "instant" : "smooth";
+  alvo.scrollIntoView({ behavior: tipo, block: "start" });
   history.replaceState(null, "", "#" + id);
 }
 
@@ -318,6 +328,37 @@ const REGIOES = ".slide, main, nav, footer, #missoes"; // não destacar a regiã
 let temporizador = null;   // espera a pessoa "parar" num item
 let ultimoTexto = "";
 let itemDestacado = null;
+
+// A TELA SEMPRE ACOMPANHA O FOCO: depois que o navegador rola até o item com
+// foco, conferimos se ele não ficou escondido atrás da barra fixa do topo ou
+// abaixo da tela. Se ficou, rolamos o que falta.
+document.addEventListener("focusin", function (evento) {
+  const elemento = evento.target;
+  if (elemento === alvoDoAtalho) {        // irPara() já cuida da rolagem
+    alvoDoAtalho = null;
+    return;
+  }
+  if (elemento === document.body) return;
+  if (elemento.closest("#tutorial, #raiox, #vlibras-app-root, #vlibras-access-wrapper")) return;
+  setTimeout(function () { mostrarNaTela(elemento); }, 0); // espera a rolagem do navegador
+});
+
+function mostrarNaTela(elemento) {
+  if (document.activeElement !== elemento) return;       // o foco já saiu dele
+  const caixa = elemento.getBoundingClientRect();
+  const topo = document.querySelector(".painel").getBoundingClientRect().bottom + 12;
+  const fundo = window.innerHeight - 12;
+
+  if (caixa.top < topo) {
+    // escondido atrás da barra: desce a página até ele aparecer
+    window.scrollBy({ top: caixa.top - topo, behavior: "smooth" });
+  } else if (caixa.bottom > fundo) {
+    // cortado embaixo: sobe a página (se for maior que a tela, mostra o começo)
+    const cabeNaTela = caixa.height <= fundo - topo;
+    const quanto = cabeNaTela ? caixa.bottom - fundo : caixa.top - topo;
+    window.scrollBy({ top: quanto, behavior: "smooth" });
+  }
+}
 
 // Passo 1 – evento de FOCO (Tab, Shift+Tab, atalhos, links)
 document.addEventListener("focusin", function (evento) {
@@ -585,6 +626,17 @@ document.getElementById("btn-traduzir-frase").addEventListener("click", function
 // ---------------------------------------------------------------------
 // 10. Início
 // ---------------------------------------------------------------------
+// Mede a altura da barra fixa do topo (ela muda em telas pequenas) e passa
+// para o CSS, que usa no scroll-padding-top
+const painel = document.querySelector(".painel");
+function medirPainel() {
+  document.documentElement.style.setProperty("--altura-painel", painel.offsetHeight + "px");
+}
+medirPainel();
+// ResizeObserver avisa sempre que a barra muda de tamanho
+// (por exemplo, quando o texto "Traduzindo" ocupa duas linhas)
+new ResizeObserver(medirPainel).observe(painel);
+
 atualizarProgresso();
 window.addEventListener("load", function () {
   abrirVLibras();
