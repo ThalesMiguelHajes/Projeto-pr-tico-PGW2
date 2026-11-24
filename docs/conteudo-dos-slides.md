@@ -14,6 +14,8 @@
 > - ▶️ **Demo** = mostrar no site da apresentação
 > - ⭐ = slide essencial (se faltar tempo, os outros podem sair)
 
+> **Atualização:** a versão final está nos slides. Neles foram adicionados as etiquetas “No HTML / No CSS / No JavaScript” em cada código, um resumo do que vai em cada arquivo (fim da Parte 2) e 7 slides novos na Parte 3 explicando `focusin`, `mousemove`, os 600 ms (`setTimeout`/`clearTimeout`) e `traduzir()`. O exemplo mínimo testado está em `docs/exemplo-vlibras-tab/`.
+
 **Divisão:**
 
 | Parte | Tema | Slides |
