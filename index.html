@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegação e Acessibilidade - Tab e VLibras</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+  <!-- 1) SKIP LINK: primeiro elemento da página. Fica escondido e aparece ao apertar Tab -->
+  <a href="#conteudo" class="pular-link" data-libras="Pular para o conteúdo principal">Pular para o conteúdo principal</a>
+
+  <!-- Tutorial inicial: explica como navegar com o teclado -->
+  <div id="tutorial" class="tutorial" role="dialog" aria-modal="true" aria-labelledby="tutorial-titulo">
+    <div class="tutorial-caixa">
+      <h2 id="tutorial-titulo" tabindex="-1" data-libras="Como navegar nesta página usando o teclado">⌨️ Como navegar nesta página</h2>
+      <p>Você pode usar o site inteiro <strong>sem mouse</strong>. Experimente:</p>
+      <ul class="teclas">
+        <li data-libras="Tab: vai para o próximo item"><kbd>Tab</kbd> vai para o próximo item</li>
+        <li data-libras="Shift mais Tab: volta para o item anterior"><kbd>Shift</kbd> + <kbd>Tab</kbd> volta para o item anterior</li>
+        <li data-libras="Enter: abre o link ou aperta o botão"><kbd>Enter</kbd> abre o link / aperta o botão</li>
+        <li data-libras="Espaço: marca a caixa ou aperta o botão"><kbd>Espaço</kbd> marca caixas e aperta botões</li>
+        <li data-libras="Alt mais 1: vai para o conteúdo. Alt mais 2: vai para o menu. Alt mais 3: vai para o formulário. Alt mais 4: vai para o rodapé"><kbd>Alt</kbd> + <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> atalhos: conteúdo, menu, formulário e rodapé</li>
+        <li data-libras="Esc: fecha esta janela"><kbd>Esc</kbd> fecha esta janela</li>
+      </ul>
+      <p class="dica">🤟 A cada item que recebe foco (ou que você passa o mouse), o <strong>VLibras</strong> traduz o texto para Libras.</p>
+      <button type="button" id="btn-comecar" class="botao" data-libras="Começar a navegar">Começar a navegar</button>
+    </div>
+  </div>
+
+  <!-- Barra de acessibilidade (padrão eMAG / gov.br) -->
+  <div class="barra-acessibilidade">
+    <ul>
+      <li><a href="#conteudo" data-libras="Ir para o conteúdo">Ir para o conteúdo <span>Alt+1</span></a></li>
+      <li><a href="#menu" data-libras="Ir para o menu">Ir para o menu <span>Alt+2</span></a></li>
+      <li><a href="#formulario" data-libras="Ir para o formulário">Ir para o formulário <span>Alt+3</span></a></li>
+      <li><a href="#rodape" data-libras="Ir para o rodapé">Ir para o rodapé <span>Alt+4</span></a></li>
+    </ul>
+    <div class="opcoes">
+      <label><input type="checkbox" id="opt-libras" checked> Libras automático</label>
+      <label><input type="checkbox" id="opt-voz"> Voz</label>
+      <button type="button" id="btn-ajuda" class="botao-pequeno" data-libras="Abrir a ajuda de navegação pelo teclado">Ajuda (?)</button>
+    </div>
+  </div>
+
+  <header class="topo">
+    <h1 data-libras="Navegação e acessibilidade">Navegação e Acessibilidade</h1>
+    <p data-libras="Teclado e VLibras">Teclado (Tab) + VLibras</p>
+    <nav id="menu" aria-label="Menu principal" tabindex="-1">
+      <ul>
+        <li><a href="#teclado" data-libras="Navegação por teclado">Teclado</a></li>
+        <li><a href="#skip" data-libras="Link para pular ao conteúdo">Skip link</a></li>
+        <li><a href="#tabindex" data-libras="Tabindex">tabindex</a></li>
+        <li><a href="#comparacao" data-libras="Exemplo certo e errado">Certo x Errado</a></li>
+        <li><a href="#vlibras" data-libras="VLibras">VLibras</a></li>
+        <li><a href="#formulario" data-libras="Formulário">Formulário</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Painel que mostra a tecla apertada e o item com foco (ajuda na apresentação) -->
+  <aside class="painel" aria-live="polite">
+    <div><span class="rotulo">Tecla:</span> <strong id="painel-tecla">—</strong></div>
+    <div><span class="rotulo">Traduzindo:</span> <strong id="painel-texto">—</strong></div>
+  </aside>
+
+  <main id="conteudo" tabindex="-1">
+
+    <section id="teclado" class="secao">
+      <h2 tabindex="0" data-libras="Navegação por teclado">1. Navegação por teclado</h2>
+      <div class="cards">
+        <article class="card" tabindex="0" data-libras="O que é? É usar o site só com o teclado, sem mouse.">
+          <h3>O que é?</h3>
+          <p>Usar o site somente com o teclado. A tecla <kbd>Tab</kbd> move o <strong>foco</strong> entre links, botões e campos.</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Quem precisa? Pessoas cegas que usam leitor de tela, pessoas com deficiência motora e quem não consegue usar o mouse.">
+          <h3>Quem precisa?</h3>
+          <p>Pessoas cegas (leitor de tela), com deficiência motora, tremores, ou que usam teclados especiais.</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Foco visível. O item selecionado precisa ter uma borda bem visível.">
+          <h3>Foco visível</h3>
+          <p>O item com foco precisa aparecer! Usamos <code>:focus-visible</code> com uma borda amarela grossa. Nunca use <code>outline: none</code> sem substituto.</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Ordem lógica. O Tab segue a ordem do código HTML, de cima para baixo.">
+          <h3>Ordem lógica</h3>
+          <p>O <kbd>Tab</kbd> segue a ordem do HTML. Por isso o código precisa estar na ordem em que a pessoa lê a página.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="skip" class="secao">
+      <h2 tabindex="0" data-libras="Link para pular ao conteúdo">2. Skip link (pular para o conteúdo)</h2>
+      <p tabindex="0" data-libras="É o primeiro link da página. Ele fica escondido e aparece quando você aperta Tab. Ele pula o menu e vai direto para o conteúdo.">
+        É o <strong>primeiro link</strong> da página. Fica escondido e aparece no primeiro <kbd>Tab</kbd>.
+        Evita que a pessoa precise passar por todo o menu em toda página. Recarregue a página e aperte <kbd>Tab</kbd> para ver.
+      </p>
+<pre tabindex="0" data-libras="Exemplo de código do link para pular ao conteúdo"><code>&lt;a href="#conteudo" class="pular-link"&gt;Pular para o conteúdo&lt;/a&gt;
+...
+&lt;main id="conteudo" tabindex="-1"&gt; ... &lt;/main&gt;</code></pre>
+    </section>
+
+    <section id="tabindex" class="secao">
+      <h2 tabindex="0" data-libras="Tabindex">3. O atributo tabindex</h2>
+      <table>
+        <caption>Valores de tabindex</caption>
+        <thead>
+          <tr><th scope="col">Valor</th><th scope="col">O que faz</th></tr>
+        </thead>
+        <tbody>
+          <tr tabindex="0" data-libras="Tabindex zero: o elemento entra na ordem normal do Tab."><td><code>0</code></td><td>Entra na ordem normal do <kbd>Tab</kbd> (ex.: estes cards).</td></tr>
+          <tr tabindex="0" data-libras="Tabindex menos um: não recebe foco pelo Tab, mas pode receber pelo JavaScript."><td><code>-1</code></td><td>Não entra no <kbd>Tab</kbd>, mas pode receber foco via JavaScript (ex.: o <code>&lt;main&gt;</code>).</td></tr>
+          <tr tabindex="0" data-libras="Tabindex maior que zero: não use, porque bagunça a ordem."><td><code>1, 2, 3...</code></td><td><strong>Evite!</strong> Força uma ordem e bagunça a navegação.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="comparacao" class="secao">
+      <h2 tabindex="0" data-libras="Exemplo certo e errado">4. Certo x Errado</h2>
+      <p>Tente chegar nos dois "botões" abaixo usando só o <kbd>Tab</kbd>:</p>
+      <div class="comparacao">
+        <div class="lado errado">
+          <h3>❌ Errado: <code>&lt;div onclick&gt;</code></h3>
+          <div class="falso-botao" id="div-botao">Enviar (div)</div>
+          <p>O <kbd>Tab</kbd> pula este item: uma <code>div</code> não recebe foco e não responde ao <kbd>Enter</kbd>.</p>
+        </div>
+        <div class="lado certo">
+          <h3>✅ Certo: <code>&lt;button&gt;</code></h3>
+          <button type="button" class="botao" id="btn-certo" data-libras="Botão enviar. Este recebe foco e funciona com Enter e Espaço.">Enviar (button)</button>
+          <p>Recebe foco e funciona com <kbd>Enter</kbd> e <kbd>Espaço</kbd> sem nenhum código extra.</p>
+        </div>
+      </div>
+      <p id="msg-comparacao" class="mensagem" role="status"></p>
+    </section>
+
+    <section id="vlibras" class="secao">
+      <h2 tabindex="0" data-libras="VLibras">5. VLibras</h2>
+      <div class="cards">
+        <article class="card" tabindex="0" data-libras="O que é o VLibras? É uma ferramenta gratuita do governo que traduz texto em português para Libras usando um avatar 3D.">
+          <h3>O que é?</h3>
+          <p>Ferramenta <strong>gratuita</strong> do Governo Federal que traduz textos em português para <strong>Libras</strong> com um avatar 3D (Ícaro, Hosana ou Guga).</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Por que é importante? Muitas pessoas surdas têm a Libras como primeira língua e o português como segunda língua.">
+          <h3>Por que é importante?</h3>
+          <p>Para muitas pessoas surdas, a <strong>Libras é a primeira língua</strong> e o português escrito é a segunda. Ler um texto longo pode ser difícil.</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Lei. A Lei 10436 de 2002 reconhece a Libras e a Lei Brasileira de Inclusão exige sites acessíveis.">
+          <h3>Lei</h3>
+          <p>A Lei 10.436/2002 reconhece a Libras e a Lei Brasileira de Inclusão (13.146/2015) exige sites acessíveis.</p>
+        </article>
+        <article class="card" tabindex="0" data-libras="Como instalar? Basta colar um script no final da página.">
+          <h3>Como instalar?</h3>
+          <p>Basta colar o código abaixo antes do <code>&lt;/body&gt;</code>. O botão azul aparece na lateral direita.</p>
+        </article>
+      </div>
+<pre tabindex="0" data-libras="Código para instalar o VLibras"><code>&lt;script src="https://vlibras.gov.br/app/vlibras-plugin.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  new window.VLibras.Widget('https://vlibras.gov.br/app');
+&lt;/script&gt;
+
+// Neste projeto, ao focar um item, chamamos a tradução pelo JavaScript:
+window.plugin.translate("texto do item");</code></pre>
+    </section>
+
+    <section id="formulario" class="secao" tabindex="-1">
+      <h2 tabindex="0" data-libras="Formulário acessível">6. Formulário acessível</h2>
+      <p>Preencha usando só o teclado. Cada campo tem um <code>&lt;label&gt;</code> ligado a ele.</p>
+      <form id="form-contato" novalidate>
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" data-libras="Campo nome">
+        </div>
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" data-libras="Campo e-mail">
+        </div>
+        <div class="campo">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto" data-libras="Escolha o assunto. Use as setas para mudar a opção.">
+            <option value="duvida">Dúvida</option>
+            <option value="sugestao">Sugestão</option>
+            <option value="elogio">Elogio</option>
+          </select>
+        </div>
+        <fieldset>
+          <legend>Como prefere o retorno?</legend>
+          <label><input type="radio" name="retorno" value="email" checked data-libras="Retorno por e-mail. Use as setas para trocar."> E-mail</label>
+          <label><input type="radio" name="retorno" value="libras" data-libras="Retorno por vídeo em Libras. Use as setas para trocar."> Vídeo em Libras</label>
+        </fieldset>
+        <div class="campo">
+          <label><input type="checkbox" id="aceito" data-libras="Aceito receber novidades. Aperte espaço para marcar."> Aceito receber novidades</label>
+        </div>
+        <button type="submit" class="botao" data-libras="Enviar formulário">Enviar</button>
+        <p id="msg-form" class="mensagem" role="alert"></p>
+      </form>
+    </section>
+
+  </main>
+
+  <footer id="rodape" class="rodape" tabindex="-1">
+    <p tabindex="0" data-libras="Grupo 2. Navegação e acessibilidade. Desenvolvimento de páginas web dinâmicas.">Grupo 2 – Navegação e Acessibilidade · PGW2 · IFSP Araraquara</p>
+    <a href="#conteudo" data-libras="Voltar ao topo">Voltar ao topo ↑</a>
+  </footer>
+
+  <!-- VLibras (widget oficial do governo) -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>

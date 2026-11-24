@@ -1,0 +1,274 @@
+/* ===== Cores e base ===== */
+:root {
+  --azul: #1351b4;
+  --azul-escuro: #0c326f;
+  --amarelo: #ffcd07;
+  --fundo: #f4f6fb;
+  --texto: #1b1b1b;
+  --branco: #ffffff;
+  --verde: #168821;
+  --vermelho: #c5221f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+/* ===== FOCO VISÍVEL: a parte mais importante da navegação por teclado ===== */
+:focus-visible {
+  outline: 4px solid var(--amarelo);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--texto);
+}
+
+/* Elementos que só recebem foco via JavaScript (tabindex="-1") não precisam da borda */
+[tabindex="-1"]:focus { outline: none; box-shadow: none; }
+
+/* Destaque do item que está sendo traduzido pelo VLibras (foco ou mouse) */
+.traduzindo {
+  background-color: #fff6c7 !important;
+  transition: background-color .2s;
+}
+
+kbd {
+  display: inline-block;
+  padding: 1px 7px;
+  border: 1px solid #888;
+  border-bottom-width: 3px;
+  border-radius: 5px;
+  background: var(--branco);
+  font-family: monospace;
+  font-size: .9em;
+}
+
+code { background: #e6e9f2; padding: 1px 5px; border-radius: 4px; }
+
+/* ===== SKIP LINK: escondido até receber foco ===== */
+.pular-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background: var(--amarelo);
+  color: var(--texto);
+  font-weight: bold;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top .2s;
+}
+.pular-link:focus { top: 0; }
+
+/* ===== Barra de acessibilidade ===== */
+.barra-acessibilidade {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 15px;
+}
+.barra-acessibilidade ul { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; }
+.barra-acessibilidade a { color: var(--branco); }
+.barra-acessibilidade a span {
+  background: var(--branco);
+  color: var(--azul-escuro);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.opcoes { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.opcoes label { cursor: pointer; }
+
+/* ===== Topo e menu ===== */
+.topo {
+  background: var(--azul);
+  color: var(--branco);
+  padding: 24px 16px 0;
+  text-align: center;
+}
+.topo h1 { margin: 0; font-size: 2rem; }
+.topo > p { margin: 4px 0 16px; }
+.topo nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.topo nav a {
+  display: block;
+  padding: 12px 16px;
+  color: var(--branco);
+  text-decoration: none;
+  font-weight: bold;
+}
+.topo nav a:hover, .topo nav a:focus-visible { background: var(--azul-escuro); }
+
+/* ===== Painel (tecla + texto traduzido) ===== */
+.painel {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 8px 16px;
+  background: var(--texto);
+  color: var(--branco);
+  font-size: 15px;
+}
+.painel .rotulo { opacity: .7; }
+#painel-tecla { color: var(--amarelo); }
+
+/* ===== Conteúdo ===== */
+main { max-width: 1000px; margin: 0 auto; padding: 16px; }
+
+.secao {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 8px 24px 24px;
+  margin: 24px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+  scroll-margin-top: 60px;
+}
+.secao h2 { color: var(--azul-escuro); display: inline-block; padding: 2px 6px; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+.card {
+  border: 2px solid #dbe3f1;
+  border-left: 6px solid var(--azul);
+  border-radius: 8px;
+  padding: 4px 16px;
+  cursor: default;
+}
+.card h3 { margin: 12px 0 4px; color: var(--azul); }
+
+pre {
+  background: #1e1e2e;
+  color: #e3e3f0;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 15px;
+}
+pre code { background: none; padding: 0; }
+
+table { width: 100%; border-collapse: collapse; }
+caption { text-align: left; font-weight: bold; padding-bottom: 8px; }
+th, td { border: 1px solid #ccd3e0; padding: 10px; text-align: left; }
+th { background: #e6e9f2; }
+
+/* ===== Certo x Errado ===== */
+.comparacao { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.lado { border-radius: 8px; padding: 4px 16px 8px; }
+.errado { border: 3px dashed var(--vermelho); }
+.certo { border: 3px solid var(--verde); }
+.falso-botao {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--vermelho);
+  color: var(--branco);
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.mensagem { font-weight: bold; min-height: 1.5em; }
+
+/* ===== Botões ===== */
+.botao {
+  padding: 12px 24px;
+  background: var(--azul);
+  color: var(--branco);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.botao:hover { background: var(--azul-escuro); }
+.botao-pequeno {
+  padding: 4px 10px;
+  background: var(--branco);
+  color: var(--azul-escuro);
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== Formulário ===== */
+.campo { margin-bottom: 16px; }
+.campo > label:first-child { display: block; font-weight: bold; margin-bottom: 4px; }
+input[type="text"], input[type="email"], select {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #8a94a6;
+  border-radius: 6px;
+}
+fieldset { border: 2px solid #dbe3f1; border-radius: 8px; margin-bottom: 16px; }
+fieldset label { margin-right: 16px; }
+input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; vertical-align: middle; }
+
+/* ===== Rodapé ===== */
+.rodape { background: var(--azul-escuro); color: var(--branco); text-align: center; padding: 24px 16px; }
+.rodape a { color: var(--amarelo); }
+
+/* ===== Tutorial inicial ===== */
+.tutorial {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, .75);
+}
+.tutorial.escondido { display: none; }
+.tutorial-caixa {
+  background: var(--branco);
+  max-width: 620px;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 8px 28px 24px;
+  border-top: 8px solid var(--amarelo);
+}
+.tutorial-caixa h2 { color: var(--azul-escuro); }
+.teclas { list-style: none; padding: 0; }
+.teclas li { padding: 8px; border-bottom: 1px solid #e6e9f2; }
+.dica { background: #e8f0fd; padding: 10px 14px; border-radius: 8px; }
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .topo h1 { font-size: 1.5rem; }
+  .secao { padding: 8px 16px 16px; }
+}
+
+/* Telas largas: deixa espaço à direita para o avatar do VLibras não cobrir o texto */
+@media (min-width: 1100px) {
+  main { margin: 0 320px 0 auto; }
+}
+@media (min-width: 1700px) {
+  main { margin: 0 auto; }
+}
